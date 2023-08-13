@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    ProductsResponse[] getAllCategories();
+    ProductsResponse[] getAllProduct();
 
     ProductsResponse getProductById(String id);
 }
