@@ -22,4 +22,9 @@ public class ShoppingCartController {
     public ResponseEntity<String> updateShoppingCart(@RequestBody AddShoppingCartInfoRequest request) {
         return ResponseEntity.ok(shoppingCartService.updateShoppingCart(request));
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<String> deleteShoppingCart(@RequestBody AddShoppingCartInfoRequest request){
+        return ResponseEntity.ok(shoppingCartService.deleteShoppingCart(request));
+    }
 }

@@ -7,4 +7,6 @@ public interface ShoppingCartService {
     String createShoppingCart(AddShoppingCartInfoRequest request);
 
     String updateShoppingCart(AddShoppingCartInfoRequest request);
+
+    String deleteShoppingCart(AddShoppingCartInfoRequest request);
 }
