@@ -1,7 +1,7 @@
 package com.example.productmanagmentmodule.service;
 
 
-import com.example.productmanagmentmodule.entity.Product;
+import com.example.productmanagmentmodule.entity.Products;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 public class RawQueryService {
     private final EntityManager entityManager;
 
-    public List<Product> searchItem(Integer page, Integer size, String keyWord){
+    public List<Products> searchItem(Integer page, Integer size, String keyWord){
         StringBuilder sql = new StringBuilder();
         StringBuilder sqlWhereCondition = new StringBuilder();
         sqlWhereCondition.append("WHERE 1 = 1 ");
@@ -30,7 +30,7 @@ public class RawQueryService {
 
         sql.append(sqlWhereCondition);
         log.info("[PRODUCTS]: Get item list: {}", sql);
-        Query dataQuery = entityManager.createNativeQuery(String.valueOf(sql), Product.class);
+        Query dataQuery = entityManager.createNativeQuery(String.valueOf(sql), Products.class);
         setQueryParameter(dataQuery, keyWord);
 
         return dataQuery.getResultList();

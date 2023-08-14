@@ -1,30 +1,30 @@
 package com.example.productmanagmentmodule.entity;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order")
-public class Order {
+@Table(name = "Orders")
+public class Orders {
     // define fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
-    private int order_id;
+    @Column(name = "orderId")
+    private Integer orderId;
 
-    @Column(name = "order_date")
-    private LocalDateTime order_date;
+    @Column(name = "orderDate")
+    private LocalDateTime orderDate;
+
+    @Column(name = "shoppingCart")
+    private ShoppingCart[] shoppingCart;
 
 //    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
 //            CascadeType.PERSIST, CascadeType.REFRESH})

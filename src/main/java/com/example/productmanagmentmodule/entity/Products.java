@@ -12,12 +12,12 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Product")
-public class Product {
+@Table(name = "Products")
+public class Products {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private String id;
 
     @Column(name = "title")

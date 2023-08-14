@@ -15,15 +15,15 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "customer")
+@Table(name = "Customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
-    private int customer_id;
+    @Column(name = "customerId")
+    private Integer customerId;
 
-    @Column(name = "customer_name")
-    private String customer_name;
+    @Column(name = "customerName")
+    private String customerName;
 
     @Column(name = "address")
     private String address;

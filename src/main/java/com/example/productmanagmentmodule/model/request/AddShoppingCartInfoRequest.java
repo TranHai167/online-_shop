@@ -1,20 +1,17 @@
 package com.example.productmanagmentmodule.model.request;
 
-import com.example.productmanagmentmodule.entity.Product;
-import lombok.AllArgsConstructor;
+import com.example.productmanagmentmodule.entity.Products;
 import lombok.Data;
-
-import javax.persistence.criteria.CriteriaBuilder;
 
 @Data
 public class AddShoppingCartInfoRequest {
     private String cartId;
-    private Product product;
+    private Products products;
     private Integer quantity;
 
-    public AddShoppingCartInfoRequest(String cartId, Product product) {
+    public AddShoppingCartInfoRequest(String cartId, Products products) {
         this.cartId = cartId;
-        this.product = product;
+        this.products = products;
         this.quantity = 1;
     }
 }

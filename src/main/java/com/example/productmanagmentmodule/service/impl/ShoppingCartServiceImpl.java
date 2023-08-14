@@ -1,8 +1,5 @@
 package com.example.productmanagmentmodule.service.impl;
 
-import com.example.productmanagmentmodule.entity.Product;
-import com.example.productmanagmentmodule.entity.ShoppingCart;
-import com.example.productmanagmentmodule.exception.CommonException;
 import com.example.productmanagmentmodule.model.request.AddShoppingCartInfoRequest;
 import com.example.productmanagmentmodule.repository.ShoppingCartRepository;
 import com.example.productmanagmentmodule.service.ShoppingCartService;

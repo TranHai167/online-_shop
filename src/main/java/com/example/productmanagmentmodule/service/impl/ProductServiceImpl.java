@@ -1,8 +1,6 @@
 package com.example.productmanagmentmodule.service.impl;
 
-import com.example.productmanagmentmodule.dto.BaseResponseNw;
-import com.example.productmanagmentmodule.dto.ProductDTO;
-import com.example.productmanagmentmodule.entity.Product;
+import com.example.productmanagmentmodule.entity.Products;
 import com.example.productmanagmentmodule.exception.CommonException;
 import com.example.productmanagmentmodule.model.response.ProductsResponse;
 import com.example.productmanagmentmodule.repository.ProductRepository;
@@ -25,30 +23,25 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     @Override
-    public Page<ProductDTO> getAllProducts(Integer page, Integer size, String keyWord) {
-        List<Product> products;
-        List<ProductDTO> productDTOList;
+    public Page<ProductsResponse> getAllProducts(Integer page, Integer size, String keyWord) {
+        List<Products> products;
+        List<ProductsResponse> productsResponseList;
 
         products = rawQueryService.searchItem(page, size, keyWord);
-        productDTOList = new ArrayList<>();
+        productsResponseList = new ArrayList<>();
 
-        for (Product item : products){
-            ProductDTO itemDTO = convertToDTO(item);
-            productDTOList.add(itemDTO);
+        for (Products item : products){
+            ProductsResponse productsResponse = convertToResponse(item);
+            productsResponseList.add(productsResponse);
         }
-        return applyPaging(productDTOList, page, size);
+        return applyPaging(productsResponseList, page, size);
     }
 
     @Override
     public ProductsResponse getProductById(String id) {
-        Product product = productRepository.findById(id).orElse(null);
-        if (product != null){
-            ProductsResponse productsResponse = new ProductsResponse();
-            productsResponse.setId(product.getId());
-            productsResponse.setTitle(product.getTitle());
-            productsResponse.setCategory(product.getCategory());
-            productsResponse.setImageUrl(product.getImageUrl());
-            productsResponse.setPrice(product.getPrice());
+        Products products = productRepository.findById(id).orElse(null);
+        if (products != null){
+            ProductsResponse productsResponse = convertToResponse(products);
             return productsResponse;
         }
         throw new CommonException("400", "Product doesn't exist");
@@ -56,8 +49,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String deleteProductById(String id) {
-        Product product = productRepository.findById(id).orElse(null);
-        if (product != null){
+        Products products = productRepository.findById(id).orElse(null);
+        if (products != null){
             productRepository.deleteById(id);
             return id;
         }
@@ -65,30 +58,65 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public BaseResponseNw<Product> createProduct(Product theItem) {
-        return null;
+    public String createProduct(Products theProduct) {
+        productRepository.save(theProduct);
+        return theProduct.getId();
     }
 
     @Override
-    public BaseResponseNw<Product> updateProductById(int id, ProductDTO theProductDTO) {
-        return null;
+    public String updateProductById(String id, ProductsResponse productsResponse) {
+        Products updateProduct = productRepository.findById(id).orElseThrow(() -> new CommonException("400", "product doesn't exist"));
+        boolean updated = false;
+
+        if (productsResponse.getCategory() != null) {
+            updateProduct.setCategory(productsResponse.getCategory());
+            updated = true;
+        }
+        if (productsResponse.getTitle() != null) {
+            updateProduct.setTitle(productsResponse.getTitle());
+            updated = true;
+        }
+        if (productsResponse.getPrice() != 0) {
+            updateProduct.setPrice(productsResponse.getPrice());
+            updated = true;
+        }
+        if (productsResponse.getImageUrl() != null){
+            updateProduct.setImageUrl((productsResponse.getImageUrl()));
+            updated = true;
+        }
+        if (updated) {
+            productRepository.save(updateProduct);
+        }
+
+        return id;
     }
 
     @Override
-    public BaseResponseNw<Page<ProductDTO>> getProductByCategory(Integer page, Integer size, String category) {
-        return null;
+    public Page<ProductsResponse> getProductByCategory(Integer page, Integer size, String category) {
+        List<Products> productsList = productRepository.getProductByCategory(category);
+        List<ProductsResponse> productsResponseList = new ArrayList<>();
+
+        if (productsList != null){
+            for (Products item : productsList){
+                ProductsResponse productsResponse = convertToResponse(item);
+                productsResponseList.add(productsResponse);
+            }
+            return applyPaging(productsResponseList, page, size);
+        }
+        throw new CommonException("400", "Product doesn't exist");
     }
 
-    private static ProductDTO convertToDTO(Product product) {
-        if (product == null){
+    private static ProductsResponse convertToResponse(Products products) {
+        if (products == null){
             return null;
         }
-        return ProductDTO
+        return ProductsResponse
                 .builder()
-                .product_id(product.getId())
-                .title(product.getTitle())
-                .category(product.getCategory())
-                .price(product.getPrice())
+                .id(products.getId())
+                .title(products.getTitle())
+                .category(products.getCategory())
+                .price(products.getPrice())
+                .imageUrl(products.getImageUrl())
                 .build();
     }
 
