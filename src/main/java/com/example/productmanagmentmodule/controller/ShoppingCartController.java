@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("shopping-cart")
+@RequestMapping("/shopping-cart")
 public class ShoppingCartController {
 
     @Autowired
@@ -15,7 +15,7 @@ public class ShoppingCartController {
 
     @PostMapping("")
     public ResponseEntity<String> createShoppingCart(@RequestBody AddShoppingCartInfoRequest request) {
-        return ResponseEntity.ok(shoppingCartService.createShoppingCart(request));
+         return ResponseEntity.ok(shoppingCartService.createShoppingCart(request));
     }
 
     @PutMapping("")
