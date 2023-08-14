@@ -23,6 +23,9 @@ public class Orders {
     @Column(name = "orderDate")
     private LocalDateTime orderDate;
 
+    @Column(name = "customerId")
+    private Integer customerId;
+
     @Column(name = "shoppingCart")
     private ShoppingCart[] shoppingCart;
 

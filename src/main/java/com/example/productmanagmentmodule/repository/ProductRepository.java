@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Products, String> {
-    @Query(value = "SELECT * FROM item WHERE category = :category", nativeQuery = true)
+public interface ProductRepository extends JpaRepository<Products, Integer> {
+    @Query(value = "SELECT * FROM products WHERE category = :category", nativeQuery = true)
     List<Products> getProductByCategory(@Param("category") String category);
 }

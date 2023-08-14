@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductsResponse getProductById(String id) {
+    public ProductsResponse getProductById(Integer id) {
         Products products = productRepository.findById(id).orElse(null);
         if (products != null){
             ProductsResponse productsResponse = convertToResponse(products);
@@ -48,11 +49,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String deleteProductById(String id) {
+    public String deleteProductById(Integer id) {
         Products products = productRepository.findById(id).orElse(null);
         if (products != null){
             productRepository.deleteById(id);
-            return id;
+            return String.valueOf(id);
         }
         throw new CommonException("400", "Product doesn't exist");
     }
@@ -60,11 +61,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public String createProduct(Products theProduct) {
         productRepository.save(theProduct);
-        return theProduct.getId();
+        return String.valueOf(theProduct.getId());
     }
 
     @Override
-    public String updateProductById(String id, ProductsResponse productsResponse) {
+    public String updateProductById(Integer id, ProductsResponse productsResponse) {
         Products updateProduct = productRepository.findById(id).orElseThrow(() -> new CommonException("400", "product doesn't exist"));
         boolean updated = false;
 
@@ -88,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
             productRepository.save(updateProduct);
         }
 
-        return id;
+        return String.valueOf(id);
     }
 
     @Override

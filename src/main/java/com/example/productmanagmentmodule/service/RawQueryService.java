@@ -21,15 +21,15 @@ public class RawQueryService {
         StringBuilder sqlWhereCondition = new StringBuilder();
         sqlWhereCondition.append("WHERE 1 = 1 ");
 
-        sql.append("SELECT * FROM item ");
+        sql.append("SELECT * FROM products ");
 
         // Tim theo keyWord
         if (keyWord != null && !keyWord.isBlank()){
-            sqlWhereCondition.append(" AND UPPER(name) LIKE :keyWord ");
+            sqlWhereCondition.append(" AND UPPER(title) LIKE :keyWord ");
         }
 
         sql.append(sqlWhereCondition);
-        log.info("[PRODUCTS]: Get item list: {}", sql);
+        log.info("[PRODUCTS]: Get products list: {}", sql);
         Query dataQuery = entityManager.createNativeQuery(String.valueOf(sql), Products.class);
         setQueryParameter(dataQuery, keyWord);
 

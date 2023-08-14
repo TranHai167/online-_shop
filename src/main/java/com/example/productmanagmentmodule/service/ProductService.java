@@ -15,13 +15,13 @@ public Page<ProductsResponse> getAllProducts(
         String keyWord
 );
 
-    public ProductsResponse getProductById(String id);
+    public ProductsResponse getProductById(Integer id);
 
-    public String deleteProductById(String id);
+    public String deleteProductById(Integer id);
 
     public String createProduct(Products theProduct);
 
-    public String updateProductById(String id, ProductsResponse productsResponse);
+    public String updateProductById(Integer id, ProductsResponse productsResponse);
 
     public Page<ProductsResponse> getProductByCategory(
             Integer page,

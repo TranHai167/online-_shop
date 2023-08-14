@@ -26,16 +26,17 @@ public class ProductController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<ProductsResponse> getProductDetail(@RequestParam String productId) {
+    public ResponseEntity<ProductsResponse> getProductDetail(@RequestParam Integer productId) {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteProduct(@RequestParam String productId) {
+    public ResponseEntity<String> deleteProduct(@RequestParam Integer productId) {
         System.out.println(productId);
         return ResponseEntity.ok(productService.deleteProductById(productId));
     }
 
+    // đang có lỗi đ add thêm đc product mới
     @PostMapping("create")
     public ResponseEntity<String> createProduct(@RequestBody Products products){
         return ResponseEntity.ok(productService.createProduct(products));
@@ -43,13 +44,13 @@ public class ProductController {
 
     @PutMapping("/update")
     public ResponseEntity<String> updateProduct(
-            @RequestParam String productId,
+            @RequestParam Integer productId,
             @RequestBody ProductsResponse productsResponse
     ){
         return ResponseEntity.ok(productService.updateProductById(productId, productsResponse));
     }
 
-    @GetMapping("/getbycategory")
+    @GetMapping("/getByCategory")
     public ResponseEntity<Page<ProductsResponse>> getProductByCategory(
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size,

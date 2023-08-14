@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class ProductsResponse {
 
     @JsonProperty("productId")
-    private String id;
+    private Integer id;
 
     @JsonProperty("title")
     private String title;
