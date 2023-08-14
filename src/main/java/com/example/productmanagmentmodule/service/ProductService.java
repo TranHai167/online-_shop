@@ -3,7 +3,6 @@ package com.example.productmanagmentmodule.service;
 import com.example.productmanagmentmodule.entity.Products;
 import com.example.productmanagmentmodule.model.response.ProductsResponse;
 import org.springframework.data.domain.Page;
-import com.example.productmanagmentmodule.dto.*;
 
 public interface ProductService {
 
