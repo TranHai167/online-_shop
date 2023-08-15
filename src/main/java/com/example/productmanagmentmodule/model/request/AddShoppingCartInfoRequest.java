@@ -10,9 +10,7 @@ public class AddShoppingCartInfoRequest {
     private String cartId;
     private Products products;
     private Integer quantity;
-
-
-
+    
     public AddShoppingCartInfoRequest(String cartId, Products products) {
         this.cartId = cartId;
         this.products = products;

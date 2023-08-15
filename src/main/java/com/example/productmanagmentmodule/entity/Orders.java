@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
@@ -16,37 +14,22 @@ import java.util.List;
 public class Orders {
     // define fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "orderId")
-    private Integer orderId;
+    private String orderId;
 
-    @Column(name = "orderDate")
-    private LocalDateTime orderDate;
+    @Column(name = "customerName")
+    private String name;
 
-    @Column(name = "customerId")
-    private Integer customerId;
+    @Column(name = "address1")
+    private String address1;
 
-    @Column(name = "shoppingCart")
-    private ShoppingCart[] shoppingCart;
+    @Column(name = "address2")
+    private String address2;
 
-//    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
-//            CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JoinColumn(name = "customer_id")
-//    private Customer customer;
-//
-//    @OneToMany(mappedBy = "order",
-//            fetch = FetchType.EAGER,
-//            cascade = {CascadeType.DETACH, CascadeType.MERGE,
-//                    CascadeType.PERSIST, CascadeType.REFRESH})
-//    private List<ShoppingCart> ShoppingCartList;
-//
-//    public void addCartEntries(ShoppingCart cartEntries){
-//        if (ShoppingCartList == null){
-//            ShoppingCartList = new ArrayList<>();
-//        }
-//
-//        ShoppingCartList.add(cartEntries);
-//
-//        cartEntries.setOrder(this);
-//    }
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "cartId")
+    private String cartId;
 }

@@ -17,11 +17,14 @@ import java.util.UUID;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     @Override
-    public UUID createOrder(OrderDTO orderDTO) {
-        LocalDateTime localDateTime = orderDTO.getOrderDate();
-        ShippingDTO shippingDTO = orderDTO.getShipping();
-        ShoppingCartDTO shoppingCartDTO = orderDTO.getItems();
+    public String createOrder(OrderDTO orderDTO) {
         UUID newUUID = UUID.randomUUID();
-        return newUUID;
+        ShippingDTO shippingDTO = orderDTO.getShipping();
+
+        ShoppingCartDTO shoppingCartDTO = orderDTO.getItems();
+
+        Orders order = new Orders(newUUID.toString(), shippingDTO.getName(), shippingDTO.getAddressLine1(), shippingDTO.getAddressLine2(), shippingDTO.getCity(), shoppingCartDTO.getCartId());
+        orderRepository.save(order);
+        return newUUID.toString();
     }
 }

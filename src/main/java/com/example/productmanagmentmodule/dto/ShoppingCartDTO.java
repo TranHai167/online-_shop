@@ -12,5 +12,4 @@ public class ShoppingCartDTO {
 
     @JsonProperty("items")
     ShoppingCartItem[] items;
-
 }
