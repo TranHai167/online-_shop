@@ -1,5 +1,6 @@
 package com.example.productmanagmentmodule.controller;
 
+import com.example.productmanagmentmodule.dto.ShoppingCartDTO;
 import com.example.productmanagmentmodule.model.request.AddShoppingCartInfoRequest;
 import com.example.productmanagmentmodule.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,10 @@ public class ShoppingCartController {
     @DeleteMapping("")
     public ResponseEntity<String> deleteShoppingCart(@RequestBody AddShoppingCartInfoRequest request){
         return ResponseEntity.ok(shoppingCartService.deleteShoppingCart(request));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<ShoppingCartDTO> getShoppingCartDetail(@RequestParam String cartId){
+        return null;
     }
 }

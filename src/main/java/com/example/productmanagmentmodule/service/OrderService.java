@@ -1,4 +1,9 @@
 package com.example.productmanagmentmodule.service;
 
-public class OrderService {
+import com.example.productmanagmentmodule.dto.OrderDTO;
+
+import java.util.UUID;
+
+public interface OrderService {
+    public UUID createOrder(OrderDTO orderDTO);
 }

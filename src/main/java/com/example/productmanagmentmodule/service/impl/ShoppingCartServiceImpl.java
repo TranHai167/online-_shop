@@ -2,7 +2,6 @@ package com.example.productmanagmentmodule.service.impl;
 
 import com.example.productmanagmentmodule.entity.Products;
 import com.example.productmanagmentmodule.entity.ShoppingCart;
-import com.example.productmanagmentmodule.entity.ShoppingCartItem;
 import com.example.productmanagmentmodule.model.request.AddShoppingCartInfoRequest;
 import com.example.productmanagmentmodule.repository.ShoppingCartRepository;
 import com.example.productmanagmentmodule.service.ShoppingCartService;
@@ -21,9 +20,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Products product = request.getProducts();
 
         // logic to save to db ShoppingCartRepository
-        ShoppingCartItem[] shoppingCartItem = {new ShoppingCartItem(product, request.getQuantity())};
-
-        ShoppingCart shoppingCart = new ShoppingCart(cartId, shoppingCartItem);
+        ShoppingCart shoppingCart = new ShoppingCart(cartId, product.getId(), request.getQuantity());
 
         shoppingCartRepository.save(shoppingCart);
         return cartId;
@@ -38,11 +35,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         // logic to update to db ShoppingCartRepository
         ShoppingCart updateShoppingCart = shoppingCartRepository.findById(cartId).orElse(null);
         if (updateShoppingCart != null){
-            ShoppingCartItem[] oldShoppingCartItems = updateShoppingCart.getItems();
-            ShoppingCartItem[] newShoppingCartItems = {new ShoppingCartItem(product, oldShoppingCartItems[0].getQuantity() + 1)};
-            updateShoppingCart.setItems(newShoppingCartItems);
+            updateShoppingCart.setProductId(product.getId());
+            updateShoppingCart.setQuantity(updateShoppingCart.getQuantity() + 1);
             shoppingCartRepository.save(updateShoppingCart);
-            return cartId;
+            return  cartId;
         }
         throw new CommonException("400", "shopping cart doesn't exist");
     }
@@ -56,10 +52,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         // logic to update to db ShoppingCartRepository
         ShoppingCart updateShoppingCart = shoppingCartRepository.findById(cartId).orElse(null);
         if (updateShoppingCart != null){
-            ShoppingCartItem[] oldShoppingCartItems = updateShoppingCart.getItems();
-            if (oldShoppingCartItems[0].getQuantity() != 1){
-                ShoppingCartItem[] newShoppingCartItems = {new ShoppingCartItem(product, oldShoppingCartItems[0].getQuantity() - 1)};
-                updateShoppingCart.setItems(newShoppingCartItems);
+            if (updateShoppingCart.getQuantity() != 1){
+                updateShoppingCart.setQuantity(updateShoppingCart.getQuantity() - 1);
                 shoppingCartRepository.save(updateShoppingCart);
                 return cartId;
             }

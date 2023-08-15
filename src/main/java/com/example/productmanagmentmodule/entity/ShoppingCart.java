@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 @Data
@@ -18,11 +19,9 @@ public class ShoppingCart {
     @Column(name = "cartId")
     private String cartId;
 
-    @Column(name = "items")
-    private ShoppingCartItem[] items;
+    @Column(name = "productId")
+    private Integer productId;
 
-//    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
-//            CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JoinColumn(name = "order_id")
-//    private Order order;
+    @Column(name = "quantity")
+    private int quantity;
 }
