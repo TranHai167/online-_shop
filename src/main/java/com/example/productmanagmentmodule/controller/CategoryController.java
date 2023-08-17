@@ -1,6 +1,7 @@
 package com.example.productmanagmentmodule.controller;
 
 import com.example.productmanagmentmodule.service.CategoryService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ public class CategoryController {
     CategoryService categoryService;
 
     @GetMapping("/getAll")
+    @ApiOperation("Get all categories of our online shop")
     public List<String> getAllCategories() {
         return categoryService.getAllCategories();
     }
