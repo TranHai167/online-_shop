@@ -1,6 +1,5 @@
 package com.example.productmanagmentmodule.util;
 
-import com.example.productmanagmentmodule.dto.BaseResponseNw;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,14 +21,4 @@ public final class JsonUtil {
 
         return new PageImpl<>(pagedResult, PageRequest.of(page, size), data.size());
     }
-
-    public static <T> BaseResponseNw<T> createSuccessResponse(T data) {
-        BaseResponseNw<T> res = new BaseResponseNw<>();
-        res.setMessage("Successful!!");
-        res.setCode(0);
-        res.setStatus(0);
-        res.setData(data);
-        return res;
-    }
-
 }
