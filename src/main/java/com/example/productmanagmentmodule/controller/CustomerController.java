@@ -20,7 +20,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getAllCustomer(page, size));
     }
 
-    @GetMapping("/getbyid")
+    @GetMapping("/getById")
     public ResponseEntity<Customer> getCustomerById(@RequestParam Integer customerId){
         return ResponseEntity.ok(customerService.getCustomerById(customerId));
     }
