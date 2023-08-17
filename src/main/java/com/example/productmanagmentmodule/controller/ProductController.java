@@ -1,6 +1,5 @@
 package com.example.productmanagmentmodule.controller;
 
-import com.example.productmanagmentmodule.dto.ProductDTO;
 import com.example.productmanagmentmodule.entity.Products;
 import com.example.productmanagmentmodule.model.response.ProductsResponse;
 import com.example.productmanagmentmodule.service.ProductService;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/products")
@@ -36,7 +34,6 @@ public class ProductController {
         return ResponseEntity.ok(productService.deleteProductById(productId));
     }
 
-    // đang có lỗi đ add thêm đc product mới
     @PostMapping("create")
     public ResponseEntity<String> createProduct(@RequestBody Products products){
         return ResponseEntity.ok(productService.createProduct(products));
