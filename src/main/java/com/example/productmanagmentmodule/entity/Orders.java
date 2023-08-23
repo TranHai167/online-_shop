@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Orders {
     // define fields
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "orderId")
     private String orderId;
 
