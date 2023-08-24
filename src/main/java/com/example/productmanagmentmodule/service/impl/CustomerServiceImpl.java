@@ -1,6 +1,6 @@
 package com.example.productmanagmentmodule.service.impl;
 
-import com.example.productmanagmentmodule.entity.Customer;
+import com.example.productmanagmentmodule.entity.UserIdentity;
 import com.example.productmanagmentmodule.exception.CommonException;
 import com.example.productmanagmentmodule.repository.CustomerRepository;
 import com.example.productmanagmentmodule.service.CustomerService;
@@ -17,25 +17,25 @@ import static com.example.productmanagmentmodule.util.JsonUtil.applyPaging;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     @Override
-    public Page<Customer> getAllCustomer(Integer page, Integer size) {
-        List<Customer> customerList;
-        customerList = customerRepository.findAll();
-        return applyPaging(customerList, page, size);
+    public Page<UserIdentity> getAllCustomer(Integer page, Integer size) {
+        List<UserIdentity> userIdentityList;
+        userIdentityList = customerRepository.findAll();
+        return applyPaging(userIdentityList, page, size);
     }
 
     @Override
-    public Customer getCustomerById(Integer customerId) {
-        Customer customer = customerRepository.findById(customerId).orElse(null);
-        if (customer != null){
-            return customer;
+    public UserIdentity getCustomerById(Integer customerId) {
+        UserIdentity userIdentity = customerRepository.findById(customerId).orElse(null);
+        if (userIdentity != null){
+            return userIdentity;
         }
         throw new CommonException("400", "Customer doesn't exist");
     }
 
     @Override
     public String deleteCustomerById(Integer customerId) {
-        Customer customer = customerRepository.findById(customerId).orElse(null);
-        if (customer != null){
+        UserIdentity userIdentity = customerRepository.findById(customerId).orElse(null);
+        if (userIdentity != null){
             customerRepository.deleteById(customerId);
             return String.valueOf(customerId);
         }
@@ -43,23 +43,26 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public String createCustomer(Customer theCustomer) {
-        customerRepository.save(theCustomer);
-        return String.valueOf(theCustomer.getCustomerId());
+    public String createCustomer(UserIdentity theUserIdentity) {
+        customerRepository.save(theUserIdentity);
+        return String.valueOf(theUserIdentity.getId());
     }
 
     @Override
-    public String updateCustomerById(Integer customerId, Customer theCustomer) {
-        Customer updateCustomer = customerRepository.findById(customerId)
+    public String updateCustomerById(Integer customerId, UserIdentity theUserIdentity) {
+        UserIdentity updateUserIdentity = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CommonException("400", "Customer doesn't exist"));
 
-        if (theCustomer.getCustomerName() != null) {
-            updateCustomer.setCustomerName(theCustomer.getCustomerName());
+        if (theUserIdentity.getEmail() != null){
+            updateUserIdentity.setEmail(theUserIdentity.getEmail());
         }
-        if (theCustomer.getAddress() != null) {
-            updateCustomer.setAddress(theCustomer.getAddress());
+        if (theUserIdentity.getPassword() != null){
+            updateUserIdentity.setPassword(theUserIdentity.getPassword());
         }
-        customerRepository.save(updateCustomer);
+        if (theUserIdentity.getFirstName() != null) {
+            updateUserIdentity.setFirstName(theUserIdentity.getFirstName());
+        }
+        customerRepository.save(updateUserIdentity);
         return String.valueOf(customerId);
     }
 }

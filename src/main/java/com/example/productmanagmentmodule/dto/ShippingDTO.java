@@ -15,11 +15,8 @@ public class ShippingDTO {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("addressLine1")
-    private String addressLine1;
-
-    @JsonProperty("addressLine2")
-    private String addressLine2;
+    @JsonProperty("addressLine")
+    private String addressLine;
 
     @JsonProperty("city")
     private String city;

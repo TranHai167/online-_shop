@@ -15,7 +15,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 public class ShoppingCart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private String id;
+
     @Column(name = "cartId")
     private String cartId;
 
@@ -23,5 +26,6 @@ public class ShoppingCart {
     private Integer productId;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
+
 }

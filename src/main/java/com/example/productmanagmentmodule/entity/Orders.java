@@ -21,11 +21,8 @@ public class Orders {
     @Column(name = "customerName")
     private String name;
 
-    @Column(name = "address1")
-    private String address1;
-
-    @Column(name = "address2")
-    private String address2;
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "city")
     private String city;

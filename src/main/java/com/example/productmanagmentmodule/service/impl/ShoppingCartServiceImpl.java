@@ -16,29 +16,30 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public String createShoppingCart(AddShoppingCartInfoRequest request) {
+        String id = request.getId();
         String cartId = request.getCartId();
         Products product = request.getProducts();
 
         // logic to save to db ShoppingCartRepository
-        ShoppingCart shoppingCart = new ShoppingCart(cartId, product.getId(), request.getQuantity());
+        ShoppingCart shoppingCart = new ShoppingCart(id, cartId, product.getId(), request.getQuantity());
 
         shoppingCartRepository.save(shoppingCart);
-        return cartId;
+        return id;
     }
 
 
     @Override
     public String updateShoppingCart(AddShoppingCartInfoRequest request) {
+        String id = request.getId();
         String cartId = request.getCartId();
         Products product = request.getProducts();
 
         // logic to update to db ShoppingCartRepository
-        ShoppingCart updateShoppingCart = shoppingCartRepository.findById(cartId).orElse(null);
+        ShoppingCart updateShoppingCart = shoppingCartRepository.findById(id).orElse(null);
         if (updateShoppingCart != null){
-            updateShoppingCart.setProductId(product.getId());
             updateShoppingCart.setQuantity(updateShoppingCart.getQuantity() + 1);
             shoppingCartRepository.save(updateShoppingCart);
-            return  cartId;
+            return  id;
         }
         throw new CommonException("400", "shopping cart doesn't exist");
     }
@@ -46,11 +47,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public String deleteShoppingCart(AddShoppingCartInfoRequest request) {
+        String id = request.getId();
         String cartId = request.getCartId();
         Products product = request.getProducts();
 
         // logic to update to db ShoppingCartRepository
-        ShoppingCart updateShoppingCart = shoppingCartRepository.findById(cartId).orElse(null);
+        ShoppingCart updateShoppingCart = shoppingCartRepository.findById(id).orElse(null);
         if (updateShoppingCart != null){
             if (updateShoppingCart.getQuantity() != 1){
                 updateShoppingCart.setQuantity(updateShoppingCart.getQuantity() - 1);

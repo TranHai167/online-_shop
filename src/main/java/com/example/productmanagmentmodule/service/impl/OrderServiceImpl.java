@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
 
         ShoppingCartDTO shoppingCartDTO = orderDTO.getItems();
 
-        Orders order = new Orders(newUUID.toString(), shippingDTO.getName(), shippingDTO.getAddressLine1(), shippingDTO.getAddressLine2(), shippingDTO.getCity(), shoppingCartDTO.getCartId());
+        Orders order = new Orders(newUUID.toString(), shippingDTO.getName(), shippingDTO.getAddressLine(), shippingDTO.getCity(), shoppingCartDTO.getCartId());
         orderRepository.save(order);
         return newUUID.toString();
     }
