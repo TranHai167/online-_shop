@@ -1,15 +1,16 @@
-package com.example.productmanagmentmodule.dto;
+package com.example.productmanagmentmodule.model.dto;
 
 import com.example.productmanagmentmodule.model.ShoppingCartItem;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ShoppingCartDTO {
 
-    @JsonProperty("cartId")
     String cartId;
-
-    @JsonProperty("items")
     ShoppingCartItem[] items;
 }

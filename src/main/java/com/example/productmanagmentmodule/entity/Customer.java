@@ -19,10 +19,10 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customerId")
+    @Column(name = "customer_id")
     private Integer customerId;
 
-    @Column(name = "customerName")
+    @Column(name = "customer_name")
     private String customerName;
 
     @Column(name = "address")

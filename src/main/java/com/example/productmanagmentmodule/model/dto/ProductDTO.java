@@ -1,4 +1,4 @@
-package com.example.productmanagmentmodule.dto;
+package com.example.productmanagmentmodule.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

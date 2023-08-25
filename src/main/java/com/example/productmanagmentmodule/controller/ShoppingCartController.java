@@ -1,7 +1,8 @@
 package com.example.productmanagmentmodule.controller;
 
-import com.example.productmanagmentmodule.dto.ShoppingCartDTO;
+import com.example.productmanagmentmodule.model.dto.ShoppingCartDTO;
 import com.example.productmanagmentmodule.model.request.AddShoppingCartInfoRequest;
+import com.example.productmanagmentmodule.model.request.UpdateShoppingCartRequest;
 import com.example.productmanagmentmodule.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +15,9 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    @PostMapping("")
-    public ResponseEntity<String> createShoppingCart(@RequestBody AddShoppingCartInfoRequest request) {
-         return ResponseEntity.ok(shoppingCartService.createShoppingCart(request));
-    }
-
-    @PutMapping("")
-    public ResponseEntity<String> updateShoppingCart(@RequestBody AddShoppingCartInfoRequest request) {
-        return ResponseEntity.ok(shoppingCartService.updateShoppingCart(request));
+    @PostMapping("/new-cart")
+    public ResponseEntity<String> createShoppingCart(@RequestBody AddShoppingCartInfoRequest payLoad) {
+         return ResponseEntity.ok(shoppingCartService.createShoppingCart(payLoad));
     }
 
     @DeleteMapping("")
@@ -31,6 +27,11 @@ public class ShoppingCartController {
 
     @GetMapping("")
     public ResponseEntity<ShoppingCartDTO> getShoppingCartDetail(@RequestParam String cartId){
-        return null;
+        return ResponseEntity.ok(shoppingCartService.getShoppingCartDetail(cartId));
+    }
+
+    @PostMapping("/update-cart")
+    public ResponseEntity<?> updateShoppingCart(@RequestBody UpdateShoppingCartRequest request) {
+        return ResponseEntity.ok(shoppingCartService.updateShoppingCart(request));
     }
 }

@@ -1,4 +1,4 @@
-package com.example.productmanagmentmodule.dto;
+package com.example.productmanagmentmodule.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;

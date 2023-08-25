@@ -1,6 +1,6 @@
 package com.example.productmanagmentmodule.util;
 
-import com.example.productmanagmentmodule.dto.BaseResponseNw;
+import com.example.productmanagmentmodule.model.dto.BaseResponseNw;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

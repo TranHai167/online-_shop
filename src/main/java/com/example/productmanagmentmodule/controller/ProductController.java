@@ -1,7 +1,7 @@
 package com.example.productmanagmentmodule.controller;
 
-import com.example.productmanagmentmodule.dto.ProductDTO;
 import com.example.productmanagmentmodule.entity.Products;
+import com.example.productmanagmentmodule.model.request.UpdateProductRequest;
 import com.example.productmanagmentmodule.model.response.ProductsResponse;
 import com.example.productmanagmentmodule.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,16 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<Page<ProductsResponse>> getCategories(
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size,
-            @RequestParam(required = false) String keyWord) {
-        return ResponseEntity.ok(productService.getAllProducts(page, size, keyWord));
+    public ResponseEntity<List<ProductsResponse>> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
     }
+
+//    public ResponseEntity<Page<ProductsResponse>> getAllProducts(
+//            @RequestParam(required = false) Integer page,
+//            @RequestParam(required = false) Integer size,
+//            @RequestParam(required = false) String keyWord) {
+//        return ResponseEntity.ok(productService.getAllProducts(page, size, keyWord));
+//    }
 
     @GetMapping("/get")
     public ResponseEntity<ProductsResponse> getProductDetail(@RequestParam Integer productId) {
@@ -37,17 +41,16 @@ public class ProductController {
     }
 
     // đang có lỗi đ add thêm đc product mới
-    @PostMapping("create")
+    @PostMapping("/create")
     public ResponseEntity<String> createProduct(@RequestBody Products products){
         return ResponseEntity.ok(productService.createProduct(products));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateProduct(
-            @RequestParam Integer productId,
-            @RequestBody ProductsResponse productsResponse
-    ){
-        return ResponseEntity.ok(productService.updateProductById(productId, productsResponse));
+    public ResponseEntity<Integer> updateProduct(
+            @RequestBody UpdateProductRequest request
+            ){
+        return ResponseEntity.ok(productService.updateProduct(request));
     }
 
     @GetMapping("/getByCategory")

@@ -1,9 +1,11 @@
 package com.example.productmanagmentmodule.service;
 
-import com.example.productmanagmentmodule.dto.OrderDTO;
+import com.example.productmanagmentmodule.model.dto.OrderDTO;
 
-import java.util.UUID;
+import java.util.List;
 
 public interface OrderService {
-    public String createOrder(OrderDTO orderDTO);
+    String createOrder(OrderDTO orderDTO);
+
+    List<OrderDTO> getDetailOrder(String cartId);
 }

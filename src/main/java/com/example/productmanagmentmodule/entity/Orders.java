@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -14,11 +16,10 @@ import javax.persistence.*;
 public class Orders {
     // define fields
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "orderId")
+    @Column(name = "order_id")
     private String orderId;
 
-    @Column(name = "customerName")
+    @Column(name = "customer_name")
     private String name;
 
     @Column(name = "address1")
@@ -27,9 +28,12 @@ public class Orders {
     @Column(name = "address2")
     private String address2;
 
+    @Column(name = "create_date")
+    private Date createDate;
+
     @Column(name = "city")
     private String city;
 
-    @Column(name = "cartId")
+    @Column(name = "cart_id")
     private String cartId;
 }
