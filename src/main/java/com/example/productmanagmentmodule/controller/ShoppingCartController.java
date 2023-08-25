@@ -25,7 +25,7 @@ public class ShoppingCartController {
         return ResponseEntity.ok(shoppingCartService.deleteShoppingCart(request));
     }
 
-    @GetMapping("")
+    @GetMapping("/getById")
     public ResponseEntity<ShoppingCartDTO> getShoppingCartDetail(@RequestParam String cartId){
         return ResponseEntity.ok(shoppingCartService.getShoppingCartDetail(cartId));
     }
