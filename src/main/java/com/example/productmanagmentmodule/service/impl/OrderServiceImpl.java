@@ -5,6 +5,7 @@ import com.example.productmanagmentmodule.dto.ShippingDTO;
 import com.example.productmanagmentmodule.dto.ShoppingCartDTO;
 import com.example.productmanagmentmodule.entity.Orders;
 import com.example.productmanagmentmodule.repository.OrderRepository;
+import com.example.productmanagmentmodule.service.EmailService;
 import com.example.productmanagmentmodule.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+
+    private final EmailService emailService;
     @Override
     public String createOrder(OrderDTO orderDTO) {
         UUID newUUID = UUID.randomUUID();
@@ -24,6 +27,7 @@ public class OrderServiceImpl implements OrderService {
         ShoppingCartDTO shoppingCartDTO = orderDTO.getItems();
 
         Orders order = new Orders(newUUID.toString(), shippingDTO.getName(), shippingDTO.getAddressLine(), shippingDTO.getCity(), shoppingCartDTO.getCartId());
+        emailService.sendSimpleMail(shippingDTO);
         orderRepository.save(order);
         return newUUID.toString();
     }
