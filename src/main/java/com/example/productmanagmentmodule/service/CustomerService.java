@@ -15,5 +15,7 @@ public interface CustomerService {
 
     public String createCustomer(Customer theCustomer);
 
+    public String VerifyOTP(String otp);
+
     public String updateCustomerById(Integer customerId, Customer theCustomer);
 }
