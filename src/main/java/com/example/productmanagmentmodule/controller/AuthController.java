@@ -1,6 +1,8 @@
 package com.example.productmanagmentmodule.controller;
 
 import com.example.productmanagmentmodule.model.request.JwtRequest;
+import com.example.productmanagmentmodule.model.response.AppUserResponse;
+import com.example.productmanagmentmodule.model.response.HttpResponse;
 import com.example.productmanagmentmodule.model.response.JwtResponse;
 import com.example.productmanagmentmodule.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,15 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("")
-    public ResponseEntity<JwtResponse> authenticate(@RequestBody JwtRequest request) {
+    public ResponseEntity<HttpResponse<JwtResponse>> authenticate(@RequestBody JwtRequest request) {
         return ResponseEntity.ok(authService.authenticate(request));
+    }
+
+    @GetMapping("/get-user")
+    public ResponseEntity<AppUserResponse> authenticate(@RequestParam String userId) {
+        if (userId == null || userId.equals("null"))
+            return ResponseEntity.ok(null);
+        return ResponseEntity.ok(authService.getAppUser(userId));
     }
 
     @GetMapping("/secured-api")

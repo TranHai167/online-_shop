@@ -14,9 +14,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDTO {
+
     private Date orderDate;
-
     private ShippingDTO shipping;
-
     private String cartId;
+    private String orderId;
 }

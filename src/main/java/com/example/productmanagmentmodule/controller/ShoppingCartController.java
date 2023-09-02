@@ -16,13 +16,15 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
 
     @PostMapping("/new-cart")
-    public ResponseEntity<String> createShoppingCart(@RequestBody AddShoppingCartInfoRequest payLoad) {
-         return ResponseEntity.ok(shoppingCartService.createShoppingCart(payLoad));
+    public ResponseEntity<String> createShoppingCart(@RequestBody String cartId) {
+        shoppingCartService.createShoppingCart(cartId);
+         return ResponseEntity.ok("Success!");
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<String> deleteShoppingCart(@RequestBody AddShoppingCartInfoRequest request){
-        return ResponseEntity.ok(shoppingCartService.deleteShoppingCart(request));
+    @DeleteMapping("/clear-cart")
+    public ResponseEntity<String> deleteShoppingCart(@RequestParam String cartId, @RequestParam String orderId){
+        shoppingCartService.deleteShoppingCart(cartId, orderId);
+        return ResponseEntity.ok("Success");
     }
 
     @GetMapping("/getById")

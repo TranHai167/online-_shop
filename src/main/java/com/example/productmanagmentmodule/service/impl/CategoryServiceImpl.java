@@ -19,7 +19,6 @@ public class CategoryServiceImpl implements CategoryService {
     public List<String> getAllCategories() {
         List<Category> categoryList = categoryRepository.findAll();
         List<String> res = new ArrayList<>();
-
         for (Category category : categoryList){
             res.add(category.getTitle());
         }

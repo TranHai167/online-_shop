@@ -1,7 +1,10 @@
 package com.example.productmanagmentmodule.service.impl;
 
 import com.example.productmanagmentmodule.entity.UserEntity;
+import com.example.productmanagmentmodule.enums.Roles;
 import com.example.productmanagmentmodule.model.request.JwtRequest;
+import com.example.productmanagmentmodule.model.response.AppUserResponse;
+import com.example.productmanagmentmodule.model.response.HttpResponse;
 import com.example.productmanagmentmodule.model.response.JwtResponse;
 import com.example.productmanagmentmodule.repository.UserRepository;
 import com.example.productmanagmentmodule.service.AuthService;
@@ -36,7 +39,13 @@ public class AuthServiceImpl implements AuthService {
         this.shoppingCartService = shoppingCartService;
     }
 
-    public JwtResponse authenticate(JwtRequest request) {
+    @Override
+    public AppUserResponse getAppUser(String userId) {
+        UserEntity user = this.repository.findFirstById(userId);
+        return new AppUserResponse(user.getFirstName(), user.getRole().equals(Roles.ADMIN));
+    }
+
+    public HttpResponse<JwtResponse> authenticate(JwtRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -46,11 +55,13 @@ public class AuthServiceImpl implements AuthService {
 
         var user = repository.findFirstByEmail(request.getEmail());
         var jwtToken = jwtUtil.generateToken(user);
-        return JwtResponse.builder()
+        JwtResponse jwtResponse = JwtResponse.builder()
                 .accessToken(jwtToken)
                 .cartId(user.getId())
                 .currentUser(user.getUsername())
                 .build();
+
+        return (HttpResponse<JwtResponse>) new HttpResponse(200, jwtResponse);
     }
 
     public JwtResponse register(JwtRequest request) {
@@ -67,7 +78,7 @@ public class AuthServiceImpl implements AuthService {
         return JwtResponse.builder()
                 .accessToken(jwtToken)
                 .cartId(user.getId())
-                .currentUser(user.getUsername())
+                .currentUser(user.getFirstName())
                 .build();
     }
 }

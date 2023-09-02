@@ -1,6 +1,9 @@
 package com.example.productmanagmentmodule.controller;
 
+import com.example.productmanagmentmodule.entity.PlacedOrders;
 import com.example.productmanagmentmodule.model.dto.OrderDTO;
+import com.example.productmanagmentmodule.model.dto.OrderPlacedDto;
+import com.example.productmanagmentmodule.model.response.OrderIdResponse;
 import com.example.productmanagmentmodule.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +17,22 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createOrder(@RequestBody OrderDTO orderDTO){
-        return ResponseEntity.ok(orderService.createOrder(orderDTO));
+    public ResponseEntity<OrderIdResponse> createOrder(@RequestBody OrderDTO orderDTO){
+        return ResponseEntity.ok(new OrderIdResponse(orderService.createOrder(orderDTO)));
     }
 
     @GetMapping("/get-order")
     public ResponseEntity<List<OrderDTO>> getDetailOrder(@RequestParam String cartId) {
         return ResponseEntity.ok(orderService.getDetailOrder(cartId));
+    }
+
+    @GetMapping("/get-orders/placed")
+    public ResponseEntity<List<OrderPlacedDto>> getPlacedOrders(@RequestParam String orderId) {
+        return ResponseEntity.ok(orderService.getPlacedOrders(orderId));
+    }
+
+    @GetMapping("/admin-get-orders")
+    public ResponseEntity<List<OrderDTO>> getAllPlacedOrders() {
+        return ResponseEntity.ok(orderService.getAllPlacedOrders());
     }
 }

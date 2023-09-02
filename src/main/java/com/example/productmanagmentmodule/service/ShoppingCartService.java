@@ -6,11 +6,11 @@ import com.example.productmanagmentmodule.model.request.UpdateShoppingCartReques
 
 public interface ShoppingCartService {
 
-    String createShoppingCart(AddShoppingCartInfoRequest request);
+    void createShoppingCart(String request);
 
     int updateShoppingCart(UpdateShoppingCartRequest request);
 
-    String deleteShoppingCart(AddShoppingCartInfoRequest request);
+    void deleteShoppingCart(String cartId, String orderId);
 
     ShoppingCartDTO getShoppingCartDetail(String cartId);
 
