@@ -28,6 +28,9 @@ public class Customer {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
 //    @OneToMany(mappedBy = "customer",
 //            fetch = FetchType.EAGER,
 //            cascade = {CascadeType.DETACH, CascadeType.MERGE,
