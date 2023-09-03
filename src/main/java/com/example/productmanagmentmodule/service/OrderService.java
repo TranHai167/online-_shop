@@ -14,4 +14,6 @@ public interface OrderService {
     List<OrderDTO> getAllPlacedOrders();
 
     List<OrderDTO> filterOrders(String customer, String address, String phoneNumber, Long fromDate, Long toDate);
+
+    void sendEmail(String orderId, String cartId);
 }

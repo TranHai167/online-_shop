@@ -1,5 +1,6 @@
 package com.example.productmanagmentmodule.controller;
 
+import com.example.productmanagmentmodule.entity.Customer;
 import com.example.productmanagmentmodule.model.request.JwtRequest;
 import com.example.productmanagmentmodule.model.response.AppUserResponse;
 import com.example.productmanagmentmodule.model.response.HttpResponse;
@@ -38,6 +39,16 @@ public class AuthController {
             @RequestBody JwtRequest request
     ) {
         return ResponseEntity.ok(authService.register(request));
+    }
+
+    @PostMapping("/create-otp")
+    public ResponseEntity<String> generateOtp(@RequestBody String phoneNumber){
+        return ResponseEntity.ok(authService.generateOtp(phoneNumber));
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<Boolean> verifyOtp(@RequestBody String otpNumber) {
+        return ResponseEntity.ok(authService.verifyOTP(otpNumber));
     }
 }
 

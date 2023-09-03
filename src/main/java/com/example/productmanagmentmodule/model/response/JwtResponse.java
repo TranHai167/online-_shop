@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 @Builder
 public class JwtResponse {
-
     @JsonProperty("access_token")
     private String accessToken;
     @JsonProperty("refresh_token")

@@ -1,5 +1,6 @@
 package com.example.productmanagmentmodule.service.impl;
 
+import com.example.productmanagmentmodule.entity.Customer;
 import com.example.productmanagmentmodule.entity.UserEntity;
 import com.example.productmanagmentmodule.enums.Roles;
 import com.example.productmanagmentmodule.model.request.JwtRequest;
@@ -10,12 +11,15 @@ import com.example.productmanagmentmodule.repository.UserRepository;
 import com.example.productmanagmentmodule.service.AuthService;
 import com.example.productmanagmentmodule.service.ShoppingCartService;
 import com.example.productmanagmentmodule.utility.JwtUtil;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -29,6 +33,11 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     private final ShoppingCartService shoppingCartService;
+
+    private String otpSent;
+
+    public final String ACCOUNT_SID = "AC56db3ce71a30f8ab114f94b8ae92d07d";
+    public final String AUTH_TOKEN = "b640a8920b17aeaf046aea3e3fb8bab8";
 
     @Autowired
     public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository repository, JwtUtil jwtUtil, PasswordEncoder passwordEncoder, ShoppingCartService shoppingCartService) {
@@ -67,10 +76,11 @@ public class AuthServiceImpl implements AuthService {
     public JwtResponse register(JwtRequest request) {
         var user = UserEntity.builder()
                 .id(UUID.randomUUID().toString())
-                .firstName(request.getUsername())
+                .firstName(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
+                .role(Roles.USER)
+                .phoneNumber(request.getPhone())
                 .build();
         var savedUser = repository.save(user);
         var jwtToken = jwtUtil.generateToken(user);
@@ -80,5 +90,33 @@ public class AuthServiceImpl implements AuthService {
                 .cartId(user.getId())
                 .currentUser(user.getFirstName())
                 .build();
+    }
+
+    @Override
+    public String generateOtp(String phoneNumber) {
+        Random random = new Random();
+
+        int[] numbers = new int[6];
+        StringBuffer otpSent = new StringBuffer();
+
+        for (int i = 0; i < 6; i++) {
+            int randomNumber = random.nextInt(10);
+            numbers[i] = randomNumber;
+            otpSent.append(numbers[i]);
+        }
+        this.otpSent = String.valueOf(otpSent);
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        phoneNumber = "+84" + phoneNumber.substring(1);
+        Message message = Message.creator(
+                        new com.twilio.type.PhoneNumber(phoneNumber),  // thay đổi số ở chỗ này này
+                        new com.twilio.type.PhoneNumber("+14086769902"),
+                        String.valueOf(otpSent))
+                .create();
+        return phoneNumber;
+    }
+
+    @Override
+    public boolean verifyOTP(String otpCheck) {
+        return otpCheck.equals(this.otpSent);
     }
 }

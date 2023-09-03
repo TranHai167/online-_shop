@@ -42,7 +42,6 @@ public class OrderServiceImpl implements OrderService {
         String cartId = orderDTO.getCartId();
         Orders order = new Orders(newUUID.toString(), shippingDTO.getName(), shippingDTO.getAddressLine1(), shippingDTO.getAddressLine2(), new Date(), shippingDTO.getCity(), cartId);
         orderRepository.save(order);
-        sendEmail(newUUID.toString(), cartId);
         return newUUID.toString();
     }
 
@@ -98,7 +97,11 @@ public class OrderServiceImpl implements OrderService {
                 order.getCartId(), order.getOrderId())).collect(Collectors.toList());
     }
 
-    private void sendEmail(String orderId, String identity) {
+    @Override
+    public void sendEmail(String orderId, String identity) {
+        if (orderId == null || identity == null)
+            return;
+
         String email = userRepository.findFirstById(identity).getEmail();
         EmailDetails emailDetails = EmailDetails.builder()
                 .subject("Your order: " + orderId + " has been received.")
