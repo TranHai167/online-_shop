@@ -13,7 +13,7 @@ public interface CustomerService {
 
     public String deleteCustomerById(Integer customerId);
 
-    public String createCustomer(Customer theCustomer);
+    public String generateOtp(Customer theCustomer);
 
     public String VerifyOTP(String otp);
 

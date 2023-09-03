@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public String createCustomer(Customer theCustomer) {
+    public String generateOtp(Customer theCustomer) {
         Random random = new Random();
 
         int[] numbers = new int[6];
@@ -68,17 +68,16 @@ public class CustomerServiceImpl implements CustomerService {
         this.otpSent = String.valueOf(otpSent);
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message.creator(
-                        new com.twilio.type.PhoneNumber("+84971889288"),// thay đổi số ở chỗ này này
+                        new com.twilio.type.PhoneNumber("+84928109167"),// thay đổi số ở chỗ này này
                         new com.twilio.type.PhoneNumber("+12542805668"),
                         String.valueOf(otpSent))
                 .create();
-        customerRepository.save(theCustomer);
         return String.valueOf(theCustomer.getCustomerId());
     }
 
     @Override
     public String VerifyOTP(String otpCheck) {
-        if (otpCheck.equals(this.otpSent)){
+        if (otpCheck.equals(this.otpSent)) {
             return "Approved";
         }
         return "Declined";

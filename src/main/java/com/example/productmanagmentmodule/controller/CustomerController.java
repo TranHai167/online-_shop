@@ -30,9 +30,9 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.deleteCustomerById(customerId));
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createCustomer(@RequestBody Customer customer){
-        return ResponseEntity.ok(customerService.createCustomer(customer));
+    @PostMapping("/create-otp")
+    public ResponseEntity<String> generateOtp(@RequestBody Customer customer){
+        return ResponseEntity.ok(customerService.generateOtp(customer));
     }
 
     @PutMapping("/update")
