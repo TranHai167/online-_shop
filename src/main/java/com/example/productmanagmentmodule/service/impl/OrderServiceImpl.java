@@ -74,6 +74,30 @@ public class OrderServiceImpl implements OrderService {
                 order.getCartId(), order.getOrderId())).collect(Collectors.toList());
     }
 
+    @Override
+    public List<OrderDTO> filterOrders(String customer, String address, String phoneNumber, Long fromDate, Long toDate) {
+        if (customer == null || customer.equals("null") || customer.equals("undefined"))
+            customer = "";
+        if (address == null || address.equals("null") || address.equals("undefined"))
+            address = "";
+        if (phoneNumber == null || phoneNumber.equals("null") || phoneNumber.equals("undefined"))
+            phoneNumber = "";
+        customer = "%" + customer + "%";
+        address = "%" + address + "%";
+        phoneNumber = "%" + phoneNumber + "%";
+        if (toDate == 0)
+            toDate = System.currentTimeMillis();
+        if (fromDate == 0)
+            fromDate = 1577836800000L;
+        Date begin = new Date(fromDate);
+        Date end = new Date(toDate);
+
+        List<Orders> orders = orderRepository.findAllByNameLikeAndAddress1LikeAndCityLikeAndCreateDateBetweenOrderByCreateDateDesc(customer, address, phoneNumber, begin, end);
+        return orders.stream().map(order -> new OrderDTO(order.getCreateDate(),
+                new ShippingDTO(order.getName(), order.getAddress1(), order.getAddress2(), order.getCity()),
+                order.getCartId(), order.getOrderId())).collect(Collectors.toList());
+    }
+
     private void sendEmail(String orderId, String identity) {
         String email = userRepository.findFirstById(identity).getEmail();
         EmailDetails emailDetails = EmailDetails.builder()

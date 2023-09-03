@@ -34,22 +34,19 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteProduct(@RequestParam Integer productId) {
+    @DeleteMapping("/delete/{productId}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Integer productId) {
         System.out.println(productId);
         return ResponseEntity.ok(productService.deleteProductById(productId));
     }
 
-    // đang có lỗi đ add thêm đc product mới
     @PostMapping("/create")
-    public ResponseEntity<String> createProduct(@RequestBody Products products){
-        return ResponseEntity.ok(productService.createProduct(products));
+    public ResponseEntity<String> createProduct(@RequestBody Products product){
+        return ResponseEntity.ok(productService.createProduct(product));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Integer> updateProduct(
-            @RequestBody UpdateProductRequest request
-            ){
+    public ResponseEntity<Integer> updateProduct(@RequestBody UpdateProductRequest request) {
         return ResponseEntity.ok(productService.updateProduct(request));
     }
 

@@ -35,4 +35,15 @@ public class OrderController {
     public ResponseEntity<List<OrderDTO>> getAllPlacedOrders() {
         return ResponseEntity.ok(orderService.getAllPlacedOrders());
     }
+
+    @GetMapping("/filter-orders")
+    public ResponseEntity<List<OrderDTO>> filterPlacedOrders(
+            @RequestParam String customer,
+            @RequestParam String address,
+            @RequestParam String phoneNumber,
+            @RequestParam Long fromDate,
+            @RequestParam Long toDate
+    ) {
+        return ResponseEntity.ok(orderService.filterOrders(customer, address, phoneNumber, fromDate, toDate));
+    }
 }

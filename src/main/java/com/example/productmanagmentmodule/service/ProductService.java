@@ -14,17 +14,17 @@ public interface ProductService {
 //    ProductsResponse getProductById(String id);
 //    Page<ProductsResponse> getAllProducts(Integer page, Integer size, String keyWord);
 
-     List<ProductsResponse> getAllProducts();
+    List<ProductsResponse> getAllProducts();
 
-    public ProductsResponse getProductById(Integer id);
+    ProductsResponse getProductById(Integer id);
 
-    public String deleteProductById(Integer id);
+    String deleteProductById(Integer id);
 
-    public String createProduct(Products theProduct);
+    String createProduct(Products theProduct);
 
-    public String updateProductById(Integer id, ProductsResponse productsResponse);
+    String updateProductById(Integer id, ProductsResponse productsResponse);
 
-    public Page<ProductsResponse> getProductByCategory(
+    Page<ProductsResponse> getProductByCategory(
             Integer page,
             Integer size,
             String category);

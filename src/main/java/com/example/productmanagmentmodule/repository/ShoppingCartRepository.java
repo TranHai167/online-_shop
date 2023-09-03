@@ -23,4 +23,9 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long
 
     @Query("UPDATE ShoppingCart s set s.quantity = 0 where s.cartId = :cartId")
     void clearCart(@Param("cartId") String cartId);
+
+    void deleteAllByProductId(int productId);
+
+    @Query("SELECT distinct s.cartId from ShoppingCart s")
+    List<String> findDistinctCartId();
 }

@@ -27,6 +27,12 @@ public class ShoppingCartController {
         return ResponseEntity.ok("Success");
     }
 
+    @DeleteMapping("/clear-shopping-cart/{cartId}")
+    public ResponseEntity<String> clearShoppingCart(@PathVariable String cartId) {
+        shoppingCartService.clearShoppingCart(cartId);
+        return ResponseEntity.ok("Success");
+    }
+
     @GetMapping("/getById")
     public ResponseEntity<ShoppingCartDTO> getShoppingCartDetail(@RequestParam String cartId){
         return ResponseEntity.ok(shoppingCartService.getShoppingCartDetail(cartId));

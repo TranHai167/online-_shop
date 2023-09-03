@@ -12,4 +12,6 @@ public interface OrderService {
     List<OrderPlacedDto> getPlacedOrders(String orderId);
 
     List<OrderDTO> getAllPlacedOrders();
+
+    List<OrderDTO> filterOrders(String customer, String address, String phoneNumber, Long fromDate, Long toDate);
 }

@@ -41,6 +41,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         List<ShoppingCartItem> items = new ArrayList<>();
         for (ShoppingCart inCart: cart) {
             Products product = productRepository.findFirstById(inCart.getProductId());
+            if (product == null)
+                continue;
             ShoppingCartItem item = new ShoppingCartItem(product, inCart.getQuantity());
             items.add(item);
         }
@@ -96,5 +98,27 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         placedOrdersRepository.saveAll(placedOrders);
         shoppingCartRepository.deleteAllByCartId(cartId);
         createDefaultShoppingCart(cartId);
+    }
+
+    @Override
+    @Transactional
+    public void clearShoppingCart(String cartId) {
+        List<ShoppingCart> shoppingCartList = shoppingCartRepository.findAllByCartId(cartId).orElseThrow();
+        for (ShoppingCart item: shoppingCartList) {
+            item.setQuantity(0);
+        }
+        shoppingCartRepository.saveAll(shoppingCartList);
+    }
+
+    @Override
+    public void addNewProductToShoppingCart(Integer productId) {
+        List<String> cartIds = shoppingCartRepository.findDistinctCartId();
+        List<ShoppingCart> shoppingCartList = new ArrayList<>();
+        for (String id: cartIds) {
+            ShoppingCart shoppingCart = new ShoppingCart(id, productId, 0);
+            shoppingCartList.add(shoppingCart);
+        }
+
+        shoppingCartRepository.saveAll(shoppingCartList);
     }
 }

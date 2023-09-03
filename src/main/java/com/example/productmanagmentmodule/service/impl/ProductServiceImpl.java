@@ -5,14 +5,18 @@ import com.example.productmanagmentmodule.exception.CommonException;
 import com.example.productmanagmentmodule.model.request.UpdateProductRequest;
 import com.example.productmanagmentmodule.model.response.ProductsResponse;
 import com.example.productmanagmentmodule.repository.ProductRepository;
+import com.example.productmanagmentmodule.repository.ShoppingCartRepository;
 import com.example.productmanagmentmodule.service.ProductService;
 import com.example.productmanagmentmodule.service.RawQueryService;
+import com.example.productmanagmentmodule.service.ShoppingCartService;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
@@ -25,8 +29,15 @@ import static com.example.productmanagmentmodule.util.JsonUtil.applyPaging;
 public class ProductServiceImpl implements ProductService {
 
     private final RawQueryService rawQueryService;
+    @Autowired
+    private final ShoppingCartService shoppingCartService;
 
+    @Autowired
     private final ProductRepository productRepository;
+
+    @Autowired
+    private final ShoppingCartRepository shoppingCartRepository;
+
 //    @Override
 //    public Page<ProductsResponse> getAllProducts(Integer page, Integer size, String keyWord) {
 //        List<Products> products;
@@ -67,8 +78,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public String deleteProductById(Integer id) {
         productRepository.deleteById(id);
+        shoppingCartRepository.deleteAllByProductId(id);
         return String.valueOf(id);
     }
 
@@ -140,8 +153,9 @@ public class ProductServiceImpl implements ProductService {
     public Integer updateProduct(UpdateProductRequest request) {
         Integer productId = request.getProductId();
         Products product = request.getProduct();
-        productRepository.deleteById(productId);
+        product.setId(productId);
         productRepository.save(product);
+        shoppingCartService.addNewProductToShoppingCart(productId);
         return request.getProductId();
     }
 }
