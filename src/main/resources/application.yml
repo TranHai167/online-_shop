@@ -32,3 +32,4 @@ spring-security:
 # Command to run zookeeper: .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
 # Command to run broker: .\bin\windows\kafka-server-start.bat .\config\server.properties
 # DB endpoint: db-onlineshop-1.chpfcpdehods.ap-southeast-1.rds.amazonaws.com
+

@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductsResponse getProductById(Integer id) {
+    public ProductsResponse getProductById(Integer id) throws CommonException {
         Products products = productRepository.findById(id).orElse(null);
         if (products != null){
             ProductsResponse productsResponse = convertToResponse(products);
@@ -92,7 +92,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String updateProductById(Integer id, ProductsResponse productsResponse) {
+    public String updateProductById(Integer id, ProductsResponse productsResponse) throws CommonException {
         Products updateProduct = productRepository.findById(id).orElseThrow(() -> new CommonException("400", "product doesn't exist"));
         boolean updated = false;
 
@@ -120,7 +120,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductsResponse> getProductByCategory(Integer page, Integer size, String category) {
+    public Page<ProductsResponse> getProductByCategory(Integer page, Integer size, String category) throws CommonException {
         List<Products> productsList = productRepository.getProductByCategory(category);
         List<ProductsResponse> productsResponseList = new ArrayList<>();
 

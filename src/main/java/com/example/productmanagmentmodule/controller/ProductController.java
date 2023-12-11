@@ -1,6 +1,7 @@
 package com.example.productmanagmentmodule.controller;
 
 import com.example.productmanagmentmodule.entity.Products;
+import com.example.productmanagmentmodule.exception.CommonException;
 import com.example.productmanagmentmodule.model.request.UpdateProductRequest;
 import com.example.productmanagmentmodule.model.response.ProductsResponse;
 import com.example.productmanagmentmodule.service.ProductService;
@@ -30,7 +31,7 @@ public class ProductController {
 //    }
 
     @GetMapping("/get")
-    public ResponseEntity<ProductsResponse> getProductDetail(@RequestParam Integer productId) {
+    public ResponseEntity<ProductsResponse> getProductDetail(@RequestParam Integer productId) throws CommonException {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
@@ -55,7 +56,7 @@ public class ProductController {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size,
             @RequestParam(required = false) String category
-    ){
+    ) throws CommonException {
         return ResponseEntity.ok(productService.getProductByCategory(page, size, category));
     }
 }

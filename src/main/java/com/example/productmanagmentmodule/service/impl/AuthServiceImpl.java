@@ -3,6 +3,7 @@ package com.example.productmanagmentmodule.service.impl;
 import com.example.productmanagmentmodule.entity.Customer;
 import com.example.productmanagmentmodule.entity.UserEntity;
 import com.example.productmanagmentmodule.enums.Roles;
+import com.example.productmanagmentmodule.exception.CommonException;
 import com.example.productmanagmentmodule.model.request.JwtRequest;
 import com.example.productmanagmentmodule.model.response.AppUserResponse;
 import com.example.productmanagmentmodule.model.response.HttpResponse;
@@ -33,7 +34,6 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     private final ShoppingCartService shoppingCartService;
-
     private String otpSent;
 
     public final String ACCOUNT_SID = "AC56db3ce71a30f8ab114f94b8ae92d07d";
@@ -93,9 +93,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String generateOtp(String phoneNumber) {
-        Random random = new Random();
+    public String generateOtp(String phoneNumber, String email) throws CommonException {
+        if (!notExistedEmail(email)) {
+            throw new CommonException("402", "Email already existed");
+        }
 
+        Random random = new Random();
         int[] numbers = new int[6];
         StringBuffer otpSent = new StringBuffer();
 
@@ -113,6 +116,10 @@ public class AuthServiceImpl implements AuthService {
                         String.valueOf(otpSent))
                 .create();
         return phoneNumber;
+    }
+
+    private boolean notExistedEmail(String email) {
+        return this.repository.findFirstByEmail(email) == null;
     }
 
     @Override

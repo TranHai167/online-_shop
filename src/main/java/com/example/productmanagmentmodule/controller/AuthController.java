@@ -1,7 +1,9 @@
 package com.example.productmanagmentmodule.controller;
 
 import com.example.productmanagmentmodule.entity.Customer;
+import com.example.productmanagmentmodule.exception.CommonException;
 import com.example.productmanagmentmodule.model.request.JwtRequest;
+import com.example.productmanagmentmodule.model.request.OtpRequest;
 import com.example.productmanagmentmodule.model.response.AppUserResponse;
 import com.example.productmanagmentmodule.model.response.HttpResponse;
 import com.example.productmanagmentmodule.model.response.JwtResponse;
@@ -42,8 +44,10 @@ public class AuthController {
     }
 
     @PostMapping("/create-otp")
-    public ResponseEntity<String> generateOtp(@RequestBody String phoneNumber){
-        return ResponseEntity.ok(authService.generateOtp(phoneNumber));
+    public ResponseEntity<String> generateOtp(@RequestBody OtpRequest otpRequest) throws CommonException {
+        String phoneNumber = otpRequest.getPhoneNumber();
+        String email = otpRequest.getEmail();
+        return ResponseEntity.ok(authService.generateOtp(phoneNumber, email));
     }
 
     @PostMapping("/verify-otp")

@@ -1,6 +1,6 @@
 package com.example.productmanagmentmodule.exception;
 
-public class CommonException extends RuntimeException{
+public class CommonException extends Exception {
     private static final long serialVersionUID = 6553216978015134922L;
     private static final String DEFAULT_ERR_CODE = "999";
     private final String errorCode;
