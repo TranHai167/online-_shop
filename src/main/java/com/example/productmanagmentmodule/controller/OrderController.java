@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 public class OrderController {
     private final OrderService orderService;
 
@@ -38,6 +38,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getPlacedOrders(orderId));
     }
 
+    // pagination
     @GetMapping("/admin-get-orders")
     public ResponseEntity<List<OrderDTO>> getAllPlacedOrders() {
         return ResponseEntity.ok(orderService.getAllPlacedOrders());
@@ -47,10 +48,8 @@ public class OrderController {
     public ResponseEntity<List<OrderDTO>> filterPlacedOrders(
             @RequestParam String customer,
             @RequestParam String address,
-            @RequestParam String phoneNumber,
-            @RequestParam Long fromDate,
-            @RequestParam Long toDate
+            @RequestParam String phoneNumber
     ) {
-        return ResponseEntity.ok(orderService.filterOrders(customer, address, phoneNumber, fromDate, toDate));
+        return ResponseEntity.ok(orderService.filterOrders(customer, address, phoneNumber));
     }
 }

@@ -30,5 +30,5 @@ public class Products {
     private double price;
 
     @Column(name = "image_url")
-    private String imageUrl;
+    private String imageU_url;
 }

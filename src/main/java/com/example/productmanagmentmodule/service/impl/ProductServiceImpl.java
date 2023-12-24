@@ -109,7 +109,7 @@ public class ProductServiceImpl implements ProductService {
             updated = true;
         }
         if (productsResponse.getImageUrl() != null){
-            updateProduct.setImageUrl((productsResponse.getImageUrl()));
+            updateProduct.setImageU_url((productsResponse.getImageUrl()));
             updated = true;
         }
         if (updated) {
@@ -144,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
                 .title(products.getTitle())
                 .category(products.getCategory())
                 .price(products.getPrice())
-                .imageUrl(products.getImageUrl())
+                .imageUrl(products.getImageU_url())
                 .build();
     }
 

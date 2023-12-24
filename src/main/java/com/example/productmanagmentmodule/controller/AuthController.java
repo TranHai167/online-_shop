@@ -7,13 +7,16 @@ import com.example.productmanagmentmodule.model.request.OtpRequest;
 import com.example.productmanagmentmodule.model.response.AppUserResponse;
 import com.example.productmanagmentmodule.model.response.HttpResponse;
 import com.example.productmanagmentmodule.model.response.JwtResponse;
+import com.example.productmanagmentmodule.model.response.UserDto;
 import com.example.productmanagmentmodule.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/authenticate")
+@RequestMapping("/api/authenticate")
 public class AuthController {
 
     @Autowired
@@ -53,6 +56,16 @@ public class AuthController {
     @PostMapping("/verify-otp")
     public ResponseEntity<Boolean> verifyOtp(@RequestBody String otpNumber) {
         return ResponseEntity.ok(authService.verifyOTP(otpNumber));
+    }
+
+    @GetMapping("/get-all-users")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        return ResponseEntity.ok(authService.getAllUsers());
+    }
+
+    @DeleteMapping("/delete-user/{email}")
+    public ResponseEntity<String> deleteUser(@PathVariable String email) {
+        return ResponseEntity.ok(authService.deleteUser(email));
     }
 }
 

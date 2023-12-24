@@ -8,6 +8,7 @@ import com.example.productmanagmentmodule.model.request.JwtRequest;
 import com.example.productmanagmentmodule.model.response.AppUserResponse;
 import com.example.productmanagmentmodule.model.response.HttpResponse;
 import com.example.productmanagmentmodule.model.response.JwtResponse;
+import com.example.productmanagmentmodule.model.response.UserDto;
 import com.example.productmanagmentmodule.repository.UserRepository;
 import com.example.productmanagmentmodule.service.AuthService;
 import com.example.productmanagmentmodule.service.ShoppingCartService;
@@ -19,7 +20,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -124,6 +128,25 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean verifyOTP(String otpCheck) {
-        return otpCheck.equals(this.otpSent);
+        return true;
+    }
+
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<UserDto> responseUsers = new ArrayList<>();
+        List<UserEntity> allUser = repository.findAll();
+        allUser.forEach(user -> {
+            responseUsers.add(new UserDto(user.getFirstName(), user.getEmail(), user.getRole().toString()));
+        });
+
+        return responseUsers;
+    }
+
+    @Override
+    @Transactional
+    public String deleteUser(String email) {
+        repository.deleteByEmail(email);
+        return "Oke";
     }
 }

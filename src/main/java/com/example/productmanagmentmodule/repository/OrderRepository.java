@@ -14,5 +14,5 @@ public interface OrderRepository extends JpaRepository<Orders, String> {
     @Query(value = "select * from Orders o order by o.create_date desc", nativeQuery = true)
     List<Orders> findAllOrderByCreateDateDesc();
 
-    List<Orders> findAllByNameLikeAndAddress1LikeAndCityLikeAndCreateDateBetweenOrderByCreateDateDesc(String name, String address, String phoneNumber, Date fromDate, Date toDate);
+    List<Orders> findAllByNameLikeAndAddress1LikeAndCityLikeOrderByCreateDateDesc(String name, String address, String phoneNumber);
 }

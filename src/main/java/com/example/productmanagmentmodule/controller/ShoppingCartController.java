@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/shopping-cart")
+@RequestMapping("/api/shopping-cart")
 public class ShoppingCartController {
 
     @Autowired

@@ -74,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> filterOrders(String customer, String address, String phoneNumber, Long fromDate, Long toDate) {
+    public List<OrderDTO> filterOrders(String customer, String address, String phoneNumber) {
         if (customer == null || customer.equals("null") || customer.equals("undefined"))
             customer = "";
         if (address == null || address.equals("null") || address.equals("undefined"))
@@ -84,14 +84,8 @@ public class OrderServiceImpl implements OrderService {
         customer = "%" + customer + "%";
         address = "%" + address + "%";
         phoneNumber = "%" + phoneNumber + "%";
-        if (toDate == 0)
-            toDate = System.currentTimeMillis();
-        if (fromDate == 0)
-            fromDate = 1577836800000L;
-        Date begin = new Date(fromDate);
-        Date end = new Date(toDate);
 
-        List<Orders> orders = orderRepository.findAllByNameLikeAndAddress1LikeAndCityLikeAndCreateDateBetweenOrderByCreateDateDesc(customer, address, phoneNumber, begin, end);
+        List<Orders> orders = orderRepository.findAllByNameLikeAndAddress1LikeAndCityLikeOrderByCreateDateDesc(customer, address, phoneNumber);
         return orders.stream().map(order -> new OrderDTO(order.getCreateDate(),
                 new ShippingDTO(order.getName(), order.getAddress1(), order.getAddress2(), order.getCity()),
                 order.getCartId(), order.getOrderId())).collect(Collectors.toList());
